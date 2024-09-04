@@ -29,7 +29,7 @@ func IsAuthorized(role string) func(http.Handler) http.Handler {
 			token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
 				return controllers.JwtKey, nil
 			})
-			if err != nil || !token.Valid || claims.Role != role {
+			if err != nil || !token.Valid {
 				http.Error(w, "Forbidden", http.StatusForbidden)
 				return
 			}
